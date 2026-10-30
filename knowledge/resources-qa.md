@@ -1,0 +1,11 @@
+# Resource evaluation and QA
+
+## Evaluate before adopting
+
+For a font, photo, icon, illustration, component package, animation or 3D model, record: source URL and author, license and allowed uses (commercial use, modification, redistribution, attribution), attribution placement, provenance, version/maintenance, file format, sizes, accessibility and privacy implications. A preview being downloadable is not permission to use it. When licensing is unclear, do not ship it. Avoid hotlinking assets without permission; self-host only when the license permits it. For libraries, check maintenance, advisories, framework compatibility, bundle cost and whether a native platform feature suffices. For external services, check cookies, data sharing, consent and ongoing cost.
+
+Prefer official specifications and primary documentation for standards; date-stamp performance claims and check current browser/platform support before relying on it. Treat galleries as inspiration, not implementation proof. Evaluate references for audience fit, hierarchy, responsive behavior, accessibility and authenticity, not just visual appeal.
+
+## QA matrix
+
+Test the primary task and at least one failure path across small and large widths; keyboard only, screen reader on the main flow, 200% zoom, reduced motion, slow network and missing assets. Check content accuracy, long/localized copy, focus order, image alt, contrast including hover/focus states, reflow, form errors, loading/empty states, layout shift, console errors and third-party failures. Verify source and license for every shipped external asset. For motion-heavy pages, add entry, exit, rapid reversal, reverse scrolling, deep-link restoration and an immediate reduced-motion path; for 3D, test poster, no-WebGL, camera controls and rendering cost. For navigation, check Escape, focus return, current route, sticky anchors and mobile menu overflow. Only run applicable checks: a static document need not pass a 3D checklist. Record **context → issue → reproduction → impact → proposed fix → retest result**. Separate automated checks, manual checks and unverified assumptions; do not mark a checklist item passed without executing it. Prioritize task blockers and misleading content before visual polish.
