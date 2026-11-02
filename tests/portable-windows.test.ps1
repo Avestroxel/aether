@@ -127,6 +127,13 @@ try {
         Assert-Contains $again.Text 'current; no managed files changed' 'repeat init was not idempotent'
         Assert-Success (Invoke-Script $runtime @('update', '--cwd', $project) $elsewhere) 'no-op update'
         Assert-Failure (Invoke-Script $runtime @('rollback', '--cwd', $project) $elsewhere) 'No update to roll back' 'rollback without update'
+        $skillsList = Invoke-Launcher $launcher @('skills') $elsewhere
+        Assert-Success $skillsList 'launcher skills list'
+        Assert-Contains $skillsList.Text 'typography:' 'skills list missing typography'
+        $briefSelect = Invoke-Launcher $launcher @('skills', '--brief', 'modern architecture studio') $elsewhere
+        Assert-Success $briefSelect 'launcher skills brief'
+        Assert-Contains $briefSelect.Text 'typography: .agents/skills/aether-typography/SKILL.md' 'brief missing typography'
+        Assert-Contains $briefSelect.Text 'layout-intelligence: .agents/skills/aether-layout-intelligence/SKILL.md' 'brief missing layout'
         Assert-Success (Invoke-Script (Join-Path $source 'uninstall-aether.ps1') @('-InstallHome', $installDir, '-NoPath', '-RemoveConfig')) 'unregister'
         Assert-True (-not [IO.File]::Exists($launcher)) 'launcher survived unregister'
         Assert-True (-not [IO.File]::Exists((Join-Path $installDir 'config.json'))) 'config survived unregister'

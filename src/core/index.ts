@@ -53,9 +53,26 @@ function empty(): Manifest { return { schema: 1, files: {}, adapters: [], histor
 function knowledgePath(name: string): string { return `aether/knowledge/${name}`; }
 function skillPath(name: string): string { return `.agents/skills/aether-${name}/SKILL.md`; }
 function indexContent(names: string[], knowledge: string[]): string {
-  return `# AETHER index\n\nStart with [design thinking](../.agents/skills/aether-design-thinking/SKILL.md). Use only relevant guidance for the task.\n\n## Skills\n${names.map((name) => `- [${name}](../${skillPath(name)})`).join("\n")}\n\n## Knowledge\n${knowledge.map((name) => `- [${name}](knowledge/${name})`).join("\n")}\n`;
+  return `# AETHER index
+
+Start with [design thinking](../.agents/skills/aether-design-thinking/SKILL.md). Act as a Creative Director and Principal UI Engineer: compare at least two distinct structural and aesthetic directions, commit to a bold visual thesis, and build directly in production code unless asked for a written brief.
+
+## Routing & Priority
+1. **Concept & Anti-Generic Direction:** \`design-thinking\`, \`visual-design\`, \`anti-generic-design\` (\`knowledge/strategy.md\`, \`knowledge/category-directions.md\`, \`knowledge/visual-direction.md\`, \`knowledge/distinctiveness.md\`)
+2. **Core Visual Craft (load for website/UI creation):** \`typography\`, \`color-intelligence\`, \`layout-intelligence\`, \`responsive-design\` (\`knowledge/color-typography.md\`, \`knowledge/layout-components-responsive.md\`)
+3. **Interactive & Spatial Craft (load when relevant):** \`component-design\`, \`navigation-architecture\`, \`interaction-design\`, \`motion-design\`, \`scroll-engineering\`, \`3d-design\` (\`knowledge/interaction-motion-3d.md\`, \`knowledge/technology-choices.md\`)
+4. **Engineering & Quality Gate:** \`accessibility\`, \`performance\`, \`ux-design\`, \`design-quality\`, \`self-improvement\` (\`knowledge/ux-accessibility.md\`, \`knowledge/performance.md\`, \`knowledge/resources-qa.md\`, \`knowledge/improvement-loop.md\`)
+
+**Conflict resolution:** Distinctive art direction, expressive web typography, atmospheric color tokens, varied section rhythm, and domain-authentic copy lead the visual experience. Accessibility (WCAG 2.2 AA, keyboard/touch parity, \`prefers-reduced-motion\`), semantics, performance, and silent-by-default audio are engineering guardrails—never an excuse for generic system-font wireframes or repetitive 3-card templates.
+
+## Skills
+${names.map((name) => `- [${name}](../${skillPath(name)})`).join("\n")}
+
+## Knowledge
+${knowledge.map((name) => `- [${name}](knowledge/${name})`).join("\n")}
+`;
 }
-const agentsContent = "# AETHER\n\nFor website design or UI work, start with `.agents/skills/aether-design-thinking/SKILL.md` and consult `aether/INDEX.md`.\n";
+const agentsContent = "# AETHER\n\nFor website design or UI work, start with `.agents/skills/aether-design-thinking/SKILL.md` and consult `aether/INDEX.md`. Pair distinctive art direction (`visual-design`, `typography`, `color-intelligence`, `layout-intelligence`) with accessible, responsive, silent-by-default engineering, and implement directly in production code.\n";
 
 /** Install packaged resources and detected (or explicitly selected) native adapters. */
 export async function init(root: string, source: string, ids?: string[]): Promise<string[]> {
@@ -203,38 +220,93 @@ export async function learn(root: string, source: string, input: { module: strin
   return collect(root, { ...input, text });
 }
 
-/** Pick the entry skill and the most relevant installed-package skills for a brief. */
-export async function selectSkills(source: string, brief: string): Promise<string[]> {
+/** Pick the entry skill and the most relevant installed-package skills for a brief and optional project root. */
+export async function selectSkills(source: string, brief: string, root?: string): Promise<string[]> {
   const skills = (await loadResources(source)).skills;
+  const available = new Set(skills.map((skill) => skill.name));
   const terms = (brief.toLowerCase().match(/[a-z0-9]+/g) || []).filter((word) => word.length > 2);
   const words = new Set(terms);
-  // Category signals complement description matching: short briefs often omit skill names.
   const signals: Record<string, RegExp> = {
-    "3d-design": /\b(3d|webgl|webgpu|three|spatial|immersive|gltf|glb|shader|spline)\b/i,
-    "motion-design": /\b(motion|animated?|scroll|interactive|transition|cinematic|reveal|parallax)\b/i,
-    "scroll-engineering": /\b(scroll|parallax|pinned|reveal|scrolltrigger|intersectionobserver)\b/i,
-    "interaction-design": /\b(button|hover|form|tabs|accordion|modal|drawer|carousel|interaction|interactive)\b/i,
-    "navigation-architecture": /\b(navigation|navbar|menu|header|mega.menu|sticky)\b/i,
-    "design-quality": /\b(qa|quality|audit|test|review|production|launch)\b/i,
-    "component-design": /\b(dashboard|admin|form|pricing|checkout|commerce|saas|component)\b/i,
-    "layout-intelligence": /\b(editorial|magazine|portfolio|architecture|agency|layout)\b/i,
-    "typography": /\b(editorial|magazine|luxury|fashion|typography|architecture)\b/i,
-    "ux-design": /\b(dashboard|admin|onboarding|checkout|workflow|education)\b/i,
-    "color-intelligence": /\b(brand|palette|color|identity)\b/i,
-    "responsive-design": /\b(mobile|responsive|tablet|breakpoint|touch|device|adaptive)\b/i,
-    "performance": /\b(performance|loading|speed|bundle|webgl)\b/i,
-    "accessibility": /\b(accessible|a11y|keyboard|screen.reader)\b/i,
+    "3d-design": /\b(3d|webgl|webgpu|three|spatial|immersive|gltf|glb|shader|spline|canvas|model)\b/i,
+    "motion-design": /\b(motion|animated?|animation|scroll|interactive|transition|cinematic|reveal|parallax|choreograph|microinteraction)\b/i,
+    "scroll-engineering": /\b(scroll|parallax|pinned|pinning|reveal|scrolltrigger|intersectionobserver|storytelling|scrub)\b/i,
+    "interaction-design": /\b(button|hover|form|tabs|accordion|modal|drawer|carousel|interaction|interactive|state|control|filter|toggle)\b/i,
+    "navigation-architecture": /\b(navigation|navbar|menu|header|mega.menu|sticky|route|routing|anchor|sidebar|topbar|footer)\b/i,
+    "design-quality": /\b(qa|quality|audit|test|review|critique|production|launch|evaluate|polish)\b/i,
+    "component-design": /\b(dashboard|admin|form|pricing|checkout|commerce|ecommerce|store|storefront|saas|component|table|card|workbench|app)\b/i,
+    "layout-intelligence": /\b(editorial|magazine|portfolio|architecture|architectural|agency|studio|layout|grid|hero|section|landing|website|site|page|homepage|flagship|composition|asymmetric)\b/i,
+    "typography": /\b(editorial|magazine|luxury|fashion|typography|type|font|serif|architecture|architectural|agency|studio|brand|portfolio|publication|story|hero|landing|website|site)\b/i,
+    "ux-design": /\b(dashboard|admin|onboarding|checkout|workflow|education|booking|conversion|journey|usability|saas|form|search)\b/i,
+    "color-intelligence": /\b(brand|palette|color|colour|identity|theme|dark|light|atmosphere|luxury|fashion|studio|editorial|storefront|commerce|landing|website|site)\b/i,
+    "responsive-design": /\b(mobile|responsive|tablet|breakpoint|touch|device|adaptive|viewport|zoom|reflow|screen)\b/i,
+    "performance": /\b(performance|loading|speed|bundle|webgl|vitals|lcp|cls|inp|fast|optimize)\b/i,
+    "accessibility": /\b(accessible|accessibility|a11y|keyboard|screen.reader|wcag|contrast|focus|inclusive)\b/i,
+    "self-improvement": /\b(improve|iteration|retrospective|lesson|experiment|hypothesis|feedback)\b/i,
   };
+  const categoryBoosts: Array<{ pattern: RegExp; boosts: Record<string, number> }> = [
+    {
+      pattern: /\b(architecture|architectural|interior|luxury|fashion|editorial|magazine|publication|portfolio|agency|studio|gallery|cultural|hotel|restaurant|roaster|artisan|brand)\b/i,
+      boosts: { "typography": 7, "layout-intelligence": 7, "color-intelligence": 6, "responsive-design": 4, "motion-design": 3 },
+    },
+    {
+      pattern: /\b(saas|dashboard|admin|workbench|analytics|platform|b2b|enterprise|tool|app|application|software)\b/i,
+      boosts: { "component-design": 7, "ux-design": 6, "layout-intelligence": 5, "typography": 4, "color-intelligence": 4, "interaction-design": 4 },
+    },
+    {
+      pattern: /\b(ecommerce|commerce|store|storefront|shop|product|checkout|catalog|retail|flagship)\b/i,
+      boosts: { "component-design": 6, "ux-design": 6, "layout-intelligence": 5, "color-intelligence": 5, "typography": 4, "responsive-design": 5, "navigation-architecture": 4 },
+    },
+    {
+      pattern: /\b(landing|website|site|homepage|web\s+page|redesign|launch)\b/i,
+      boosts: { "layout-intelligence": 6, "typography": 6, "color-intelligence": 5, "responsive-design": 4, "component-design": 3 },
+    },
+  ];
+  const stackBoosts: Record<string, number> = {};
+  if (root) {
+    try {
+      const tree = new SafeTree(root);
+      const pkgRaw = await tree.read("package.json");
+      if (pkgRaw) {
+        const pkg = JSON.parse(pkgRaw.toString("utf8")) as { dependencies?: Record<string, string>; devDependencies?: Record<string, string> };
+        const deps = { ...pkg.dependencies, ...pkg.devDependencies };
+        if ("three" in deps || "@react-three/fiber" in deps || "@splinetool/react-spline" in deps) {
+          stackBoosts["3d-design"] = (stackBoosts["3d-design"] || 0) + 4;
+          stackBoosts["performance"] = (stackBoosts["performance"] || 0) + 3;
+        }
+        if ("gsap" in deps || "motion" in deps || "framer-motion" in deps || "lenis" in deps) {
+          stackBoosts["motion-design"] = (stackBoosts["motion-design"] || 0) + 3;
+          stackBoosts["scroll-engineering"] = (stackBoosts["scroll-engineering"] || 0) + 2;
+        }
+      }
+    } catch { /* Ignore unreadable or absent project metadata during selection. */ }
+  }
   const scores = skills.filter((skill) => !["design-thinking", "visual-design", "anti-generic-design"].includes(skill.name)).map((skill) => {
     const title = skill.name.replace(/-/g, " ");
     const tokens = new Set((`${title} ${skill.description}`.toLowerCase().match(/[a-z0-9]+/g) || []).filter((word) => word.length > 2));
-    return { name: skill.name, score: (signals[skill.name]?.test(brief) ? 8 : 0) + [...words].reduce((score, word) => score + (tokens.has(word) ? (title.includes(word) ? 3 : 1) : 0), 0) };
+    let score = (signals[skill.name]?.test(brief) ? 9 : 0) + (stackBoosts[skill.name] || 0);
+    for (const group of categoryBoosts) {
+      if (group.pattern.test(brief) && group.boosts[skill.name]) score += group.boosts[skill.name];
+    }
+    score += [...words].reduce((sum, word) => sum + (tokens.has(word) ? (title.includes(word) ? 3 : 1) : 0), 0);
+    return { name: skill.name, score };
   }).filter((item) => item.score > 0).sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
-  // Avoid wasting the shortlist on overlapping broad topics when a specialist is requested.
-  const chosen = scores.slice(0, 4).map((item) => item.name);
-  if (signals["scroll-engineering"].test(brief) && skills.some((skill) => skill.name === "scroll-engineering")) {
-    if (!chosen.includes("scroll-engineering")) chosen.splice(3, 1, "scroll-engineering");
-    if (!chosen.includes("motion-design")) chosen.splice(2, 1, "motion-design");
+
+  const chosen = scores.slice(0, 5).map((item) => item.name);
+  const ensure = (name: string, replaceIndex = chosen.length - 1) => {
+    if (!available.has(name) || chosen.includes(name)) return;
+    if (chosen.length < 5) chosen.push(name);
+    else if (replaceIndex >= 0 && replaceIndex < chosen.length) chosen.splice(replaceIndex, 1, name);
+  };
+  // Enforce skill dependencies so coupled capabilities are never loaded in isolation.
+  if (signals["scroll-engineering"].test(brief)) {
+    ensure("scroll-engineering", 4);
+    ensure("motion-design", 3);
+  }
+  if (chosen.includes("3d-design")) ensure("performance", 4);
+  if (chosen.includes("navigation-architecture") && signals["responsive-design"].test(brief)) ensure("responsive-design", 4);
+  // If a brief is very short or generic with no matches, provide the visual craft foundation.
+  if (chosen.length === 0) {
+    for (const fallback of ["typography", "layout-intelligence", "color-intelligence", "responsive-design"]) ensure(fallback);
   }
   return ["design-thinking", "visual-design", "anti-generic-design", ...new Set(chosen)];
 }

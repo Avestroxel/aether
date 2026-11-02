@@ -50,7 +50,7 @@ async function run(): Promise<void> {
     }
     case "skills": {
       if (flags.brief) {
-        for (const name of await selectSkills(source, flags.brief)) console.log(`${name}: .agents/skills/aether-${name}/SKILL.md`);
+        for (const name of await selectSkills(source, flags.brief, root)) console.log(`${name}: .agents/skills/aether-${name}/SKILL.md`);
       } else for (const skill of await listSkills(source)) console.log(`${skill.name}: ${skill.description}`);
       return;
     }
@@ -80,7 +80,7 @@ async function run(): Promise<void> {
     }
     case "lessons": {
       if (!flags.brief) throw new Error("Use --brief DESCRIPTION");
-      const selected = await selectSkills(source, flags.brief);
+      const selected = await selectSkills(source, flags.brief, root);
       for (const item of await contributions(root, selected)) console.log(`${item.module}/${item.id} v${item.version} [${item.scope}] source: ${item.provenance.source || item.provenance.project}\n  ${item.text}`);
       return;
     }

@@ -5,11 +5,9 @@ description: Plan usable website navigation, menus, anchors and route changes ac
 
 # Navigation architecture
 
-Use for site maps, headers, mega menus, sticky navigation or mobile nav. Read [strategy](../../knowledge/strategy.md), [layout, components and responsive](../../knowledge/layout-components-responsive.md) and [UX and accessibility](../../knowledge/ux-accessibility.md).
+Use for architectural headers, site maps, section indexes, mega menus, sticky navigation, and mobile drawers. Read [strategy](../../knowledge/strategy.md), [layout, components and responsive](../../knowledge/layout-components-responsive.md), and [UX and accessibility](../../knowledge/ux-accessibility.md).
 
-1. List top tasks and destinations. Group by user language, not internal org chart; choose labels that predict destination and identify the current location. Keep search and essential actions findable without hover or animation.
-2. Select direct links for navigation and buttons for opening menus. Specify desktop, narrow width and zoomed layouts, overflow, open/close/return focus, Escape, outside dismissal and active state. A disclosure menu is not automatically an ARIA application menu; use native semantics unless its keyboard model is fully implemented.
-3. For sticky headers and in-page links, account for focus, heading offset, anchor URLs, back/forward restoration and content revealed on load. Route transitions must not delay focus or leave the old page interactive behind the new one.
-4. Walk representative routes with keyboard, touch and screen reader at small and large widths, 200% zoom and reduced motion. Test deep links, missing destinations, long translated labels and JS failure where progressive enhancement is expected.
-
-Deliver a destination map, navigation state table, responsive behavior and verification notes. Do not trade findability for a clever menu animation.
+1. **Design clear, category-authentic wayfinding:** Organize navigation around 3–5 specific visitor destinations (e.g., `Selected Works`, `Practice`, `Material Library`, `Monograph`, `Inquire`) plus a distinct primary action. Keep headers refined—such as a low-profile translucent bar with a `1px` structural bottom hairline—and ensure key actions are discoverable without hover.
+2. **Use semantic links for navigation and buttons for opening menus:** Implement `<a href="...">` links for navigation and buttons for opening menus or mobile drawers (`aria-expanded`, `aria-controls`). Manage desktop, narrow mobile, and zoomed layouts cleanly, including open/close state, return focus, Escape, outside dismissal, and current-section indication.
+3. **Coordinate sticky headers and in-page anchors:** For sticky headers, apply `scroll-margin-top` on target sections so headings are never obscured, and preserve focus, anchor URLs, back/forward restoration, and mid-page load position. Ensure closed mobile drawers do not retain keyboard focus or intercept clicks.
+4. **Verify across devices and assistive tech:** Test navigation flows with keyboard tabbing, touch, and screen reader across mobile (`320px–375px`), desktop, `200%` zoom, and reduced motion.

@@ -5,11 +5,11 @@ description: Develop an intentional visual direction for web pages through hiera
 
 # Visual design
 
-Use after the page goal and audience are understood. Read [visual direction](../../knowledge/visual-direction.md) and [distinctiveness](../../knowledge/distinctiveness.md).
+Use to establish art direction, visual hierarchy, materiality, and imagery for any web experience. Read [visual direction](../../knowledge/visual-direction.md), [distinctiveness](../../knowledge/distinctiveness.md), and [category directions](../../knowledge/category-directions.md).
 
-1. State a visual thesis in three audience-relevant attributes and map each to observable choices (e.g. 'precise' → labeled diagrams and aligned numbers).
-2. Identify the primary question each viewport must answer. Establish one focal point with scale, contrast and spacing before adding decorative details.
-3. Choose a coherent image system: subject, crop, aspect ratios, mobile focal point, icon style and alt-text intent. Verify provenance and license with [resource QA](../../knowledge/resources-qa.md).
-4. Audit at thumbnail, reading and task scale. Remove effects that obscure evidence or make controls less discoverable.
-
-Example: A laboratory booking page might pair restrained editorial type with real facility photographs, instrument labels and a visible booking slot—not a generic neon 'innovation' collage. Deliver a visual thesis, reference annotations explaining *why*, content/asset requirements, and an annotated section hierarchy. Do not copy reference layouts or substitute attractive mock content for real product claims.
+1. **Commit to a three-part visual thesis:** Define three concrete art-direction attributes tied to the subject and category (e.g., *Monolithic, Tactile, Indexical* for an architecture studio; *Precision-Engineered, Luminous, High-Velocity* for a developer platform) and translate each directly into typography, surface palette, border treatment, and spatial proportions.
+2. **Understand true minimalism vs. emptiness:** Minimalism is **sculptural proportion, dramatic typographic tension, tactile surface contrast, and intentional negative space**—never visual emptiness, unstyled wireframes, or bare white boxes with default fonts. Every viewport needs a commanding focal point, deliberate scale contrast, and refined detail (hairline rules, index numerals, caption metadata, or bespoke visual artifacts).
+3. **Author authentic visual and textual evidence:**
+   - **Existing product/repo:** Use verified product facts, real workflows, and authentic assets; never fabricate false legal or compliance claims.
+   - **New website / short prompt:** Author **domain-authentic, concrete, high-craft realistic content** and bespoke visual artifacts—such as precision SVG architectural plans, material swatches, interactive telemetry diagrams, or curated photography art direction with realistic captions and specifications. Never leave empty placeholder boxes or meta-disclaimers.
+4. **Verify across scales and build directly:** Ensure hierarchy is unmistakable at thumbnail scale, effortless at reading scale, and tactile at interaction scale. Verify asset provenance with [resource QA](../../knowledge/resources-qa.md) and express the visual direction directly in production CSS and markup.

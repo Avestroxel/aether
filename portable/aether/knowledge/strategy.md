@@ -1,18 +1,26 @@
 # Strategy and design thinking
 
-## Establish the problem
+## Rapid creative direction (think silently, execute in code)
 
-Record the audience and their context (device, expertise, urgency, accessibility needs); the primary task; the business outcome; the evidence available; and constraints such as budget, content, technology, locale, deadline and brand. Separate observed facts, stakeholder claims and assumptions. If research is missing, mark hypotheses and choose a cheap test rather than presenting guesses as insights.
+When asked to build or redesign a website or application UI, act as a principal creative director and staff design engineer—not a bureaucratic researcher writing prose essays:
 
-A usable framing: **For** first-time visitors comparing plans, **who need** to know whether the product fits their team, **make it possible to** compare limits and cost without signup, **so that** they can choose a plan confidently. Success signal: plan comparison completion, not just button clicks.
+1. **Understand the problem & category:** Identify the audience, their immediate mindset (evaluating craft, executing a high-density workflow, shopping a flagship product, reading an editorial story), the primary action, and technical/accessibility constraints.
+2. **Distinguish existing products from greenfield prompts:**
+   - **Existing repository or product data provided:** Ground copy, metrics, workflows, and claims strictly in the repository's verified facts. Never invent fake compliance badges, fabricated customer quotes, or false legal claims.
+   - **New website or short prompt:** Author **domain-authentic, concrete, high-craft content** that brings the concept to life (e.g., real architectural typology, material palettes, square-meter specs, and site coordinates for an architecture studio; realistic query latency, schema diffs, and CLI snippets for a developer tool). Never ship `Lorem ipsum`, `"Feature 1 / Feature 2"`, `"Transform your workflow"`, or meta-disclaimers about missing copy.
+3. **Compare two structural concepts:** Mentally contrast at least two genuinely different spatial and narrative structures (not two color skins of the same 3-card template). Pick the concept that best serves the subject's emotional register and user task.
+4. **Build immediately:** Translate the winning concept straight into polished, responsive, accessible HTML/CSS/JS or framework components. Only output a written strategy brief when the user asks for strategy, audit, or planning rather than UI implementation.
 
-## Generate and select directions
+## Narrative arc and task architecture
 
-1. Map the journey: entry → decision → action → result; note anxiety, missing information, and failure points.
-2. Sketch at least two structurally different approaches when scope allows: e.g. decision table vs. guided recommendation. Do not treat two color palettes as two concepts.
-3. Compare options by task clarity, brand fit, implementation effort, inclusion, and reversibility. State what was rejected and why.
-4. Prototype the riskiest assumption first. Test with realistic content, constrained screens and meaningful error states.
+Every page or flow needs a deliberate progression:
+- **First viewport (The Hook & Thesis):** Establish immediate category authority, atmospheric tone, typographic focal point, and a clear primary path forward within 3 seconds.
+- **Middle viewports (Proof & Mechanics):** Alternate spatial pacing—pair expansive visual or interactive proof with structured technical depth, editorial narrative, or concrete artifacts. Avoid repeating the same layout pattern in consecutive sections.
+- **Resolution (Action & Confidence):** Remove friction at the point of commitment (transparent parameters, clear form states, direct contact or interactive trial, and predictable navigation).
 
-## Evidence and handoff
+## Evidence, validation, and handoff
 
-Use interviews to understand motivations, task observation to find friction, analytics to locate drop-offs, and usability tests to check task success. Each has limitations: analytics does not explain why; stated preferences do not prove behavior. Define a measurable primary outcome and guardrails (errors, accessibility, performance). Handoff: one-sentence intent, user task, prioritized content, chosen direction, assumptions, constraints and test plan. Revisit when evidence conflicts with the premise.
+When evaluating or iterating on an existing product:
+- Separate observed behavior, repository facts, and hypotheses.
+- Define a primary task success signal alongside engineering guardrails (WCAG 2.2 AA accessibility, responsive reflow, Core Web Vitals, and reduced-motion parity).
+- Never claim user interviews, usability sessions, or field metrics that were not actually conducted.

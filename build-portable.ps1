@@ -107,14 +107,35 @@ foreach ($name in $names) {
 }
 if ($names -cnotcontains 'design-thinking') { throw 'Missing design-thinking entry skill' }
 
-$index = "# AETHER index`n`nStart with [design thinking](../.agents/skills/aether-design-thinking/SKILL.md). Use only relevant guidance for the task.`n`n## Skills`n"
+$index = @'
+# AETHER index
+
+Start with [design thinking](../.agents/skills/aether-design-thinking/SKILL.md). Act as a Creative Director and Principal UI Engineer: compare at least two distinct structural and aesthetic directions, commit to a bold visual thesis, and build directly in production code unless asked for a written brief.
+
+## Routing & Priority
+1. **Concept & Anti-Generic Direction:** `design-thinking`, `visual-design`, `anti-generic-design` (`knowledge/strategy.md`, `knowledge/category-directions.md`, `knowledge/visual-direction.md`, `knowledge/distinctiveness.md`)
+2. **Core Visual Craft (load for website/UI creation):** `typography`, `color-intelligence`, `layout-intelligence`, `responsive-design` (`knowledge/color-typography.md`, `knowledge/layout-components-responsive.md`)
+3. **Interactive & Spatial Craft (load when relevant):** `component-design`, `navigation-architecture`, `interaction-design`, `motion-design`, `scroll-engineering`, `3d-design` (`knowledge/interaction-motion-3d.md`, `knowledge/technology-choices.md`)
+4. **Engineering & Quality Gate:** `accessibility`, `performance`, `ux-design`, `design-quality`, `self-improvement` (`knowledge/ux-accessibility.md`, `knowledge/performance.md`, `knowledge/resources-qa.md`, `knowledge/improvement-loop.md`)
+
+**Conflict resolution:** Distinctive art direction, expressive web typography, atmospheric color tokens, varied section rhythm, and domain-authentic copy lead the visual experience. Accessibility (WCAG 2.2 AA, keyboard/touch parity, `prefers-reduced-motion`), semantics, performance, and silent-by-default audio are engineering guardrails—never an excuse for generic system-font wireframes or repetitive 3-card templates.
+
+## Skills
+'@.Replace("`r`n", "`n") + "`n"
 $index += (($names | ForEach-Object { "- [$_](../.agents/skills/aether-$_/SKILL.md)" }) -join "`n")
 $index += "`n`n## Knowledge`n"
 $index += (($knowledge | ForEach-Object { "- [$_](knowledge/$_)" }) -join "`n")
 $index += "`n"
 Add-File $files 'aether/INDEX.md' $index
-Add-File $files 'AGENTS.md' "# AETHER`n`nFor website design or UI work, start with ``.agents/skills/aether-design-thinking/SKILL.md`` and consult ``aether/INDEX.md``.`n"
-$workflow = "# AETHER design entry workflow`n`nFor design, UI/UX, frontend, layout, styling, or visual implementation tasks:`n1. From the project root, read ``.agents/skills/aether-design-thinking/SKILL.md`` first and follow its design-thinking workflow.`n2. Read ``aether/INDEX.md`` to find the relevant AETHER guidance and assets.`n3. Use that guidance while planning and implementing the task; do not skip the entry workflow.`n"
+Add-File $files 'AGENTS.md' "# AETHER`n`nFor website design or UI work, start with ``.agents/skills/aether-design-thinking/SKILL.md`` and consult ``aether/INDEX.md``. Pair distinctive art direction (``visual-design``, ``typography``, ``color-intelligence``, ``layout-intelligence``) with accessible, responsive, silent-by-default engineering, and implement directly in production code.`n"
+$workflow = @'
+# AETHER design entry workflow
+
+For website, UI/UX, frontend, layout, styling, or visual implementation tasks:
+1. Read `.agents/skills/aether-design-thinking/SKILL.md` first. Act as a Creative Director and Principal UI Engineer: silently compare at least two distinct structural and aesthetic concepts tailored to the domain, choose a bold visual thesis, and implement directly in production-quality code (do not output a prose brief unless asked for strategy/critique only).
+2. Read `aether/INDEX.md` to load only the skills relevant to the task: pair concept direction with the Core Visual Craft skills (`visual-design`, `typography`, `color-intelligence`, `layout-intelligence`) plus any needed specialist skills (`component-design`, `navigation-architecture`, `interaction-design`, `motion-design`, `scroll-engineering`, `responsive-design`, `3d-design`, `accessibility`, `performance`, `design-quality`).
+3. Creative priority and conflict resolution: distinctive art direction, expressive web typography, atmospheric color tokens, varied section rhythm, and domain-authentic content drive the design. Accessibility (WCAG 2.2 AA, keyboard/touch parity, `prefers-reduced-motion`), semantics, performance, and silent-by-default audio are mandatory engineering guardrails that shape how the interface is built—never an excuse for generic system-font wireframes, repetitive 3-card templates, or visual emptiness.
+'@.Replace("`r`n", "`n") + "`n"
 $rule = "---`ntrigger: model_decision`ndescription: `"Use AETHER for design, UI/UX, frontend, layout, styling, and visual implementation tasks.`"`n---`n`n$workflow"
 Add-File $files '.agents/rules/aether-design-thinking.md' $rule
 

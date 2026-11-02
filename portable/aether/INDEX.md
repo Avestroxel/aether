@@ -1,6 +1,14 @@
 # AETHER index
 
-Start with [design thinking](../.agents/skills/aether-design-thinking/SKILL.md). Use only relevant guidance for the task.
+Start with [design thinking](../.agents/skills/aether-design-thinking/SKILL.md). Act as a Creative Director and Principal UI Engineer: compare at least two distinct structural and aesthetic directions, commit to a bold visual thesis, and build directly in production code unless asked for a written brief.
+
+## Routing & Priority
+1. **Concept & Anti-Generic Direction:** `design-thinking`, `visual-design`, `anti-generic-design` (`knowledge/strategy.md`, `knowledge/category-directions.md`, `knowledge/visual-direction.md`, `knowledge/distinctiveness.md`)
+2. **Core Visual Craft (load for website/UI creation):** `typography`, `color-intelligence`, `layout-intelligence`, `responsive-design` (`knowledge/color-typography.md`, `knowledge/layout-components-responsive.md`)
+3. **Interactive & Spatial Craft (load when relevant):** `component-design`, `navigation-architecture`, `interaction-design`, `motion-design`, `scroll-engineering`, `3d-design` (`knowledge/interaction-motion-3d.md`, `knowledge/technology-choices.md`)
+4. **Engineering & Quality Gate:** `accessibility`, `performance`, `ux-design`, `design-quality`, `self-improvement` (`knowledge/ux-accessibility.md`, `knowledge/performance.md`, `knowledge/resources-qa.md`, `knowledge/improvement-loop.md`)
+
+**Conflict resolution:** Distinctive art direction, expressive web typography, atmospheric color tokens, varied section rhythm, and domain-authentic copy lead the visual experience. Accessibility (WCAG 2.2 AA, keyboard/touch parity, `prefers-reduced-motion`), semantics, performance, and silent-by-default audio are engineering guardrailsâ€”never an excuse for generic system-font wireframes or repetitive 3-card templates.
 
 ## Skills
 - [3d-design](../.agents/skills/aether-3d-design/SKILL.md)

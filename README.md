@@ -33,6 +33,7 @@ Ask your coding agent: “Create a premium site for a modern architecture studio
 | `aether rollback [--cwd DIR]` | Restore the most recent update if its files have not changed since; preserve history |
 | `aether uninstall [--cwd DIR]` | Remove unchanged project-owned files; leave modified files, contributions and history |
 | `aether package [--cwd DIR]` | Rebuild the portable package from the registered source checkout; `--cwd` must name an existing directory but does not change the package destination |
+| `aether skills [--brief TEXT] [--cwd DIR]` | List available design skills or select an intelligent context-appropriate shortlist matching a brief |
 | `aether --help` / `aether help` / `aether -h` | Show Windows launcher usage |
 | `aether --version` | Print the portable Windows launcher version |
 
@@ -53,7 +54,7 @@ This launcher requires Windows PowerShell 5.1 and Windows `powershell.exe`/`.cmd
 
 The existing `aether-design` CLI requires Node.js 20+. For a local checkout, run `npm install && npm run build`, then from a target project run `node C:\path\to\AETHER\dist\cli.js init` (or `node dist/cli.js init --cwd C:\path\to\project` from the checkout). The npm registry returned 404 for `aether-design` on 2026-10-30, but namespace availability and publication are **not confirmed**; local installation does not require publishing. `npx aether-design ...` depends on a published package and is not the Windows quickstart.
 
-Unlike the Windows launcher, the **Node CLI** supports `--ide` (for example, `cursor,claude`) to select adapters and `skills --brief` to get a deterministic shortlist; these options are not accepted by portable `aether`. For example: `node dist/cli.js init --cwd C:\path\to\project --ide cursor,claude`. Its additional commands are documented below.
+Both the portable Windows launcher and the **Node CLI** provide identical intelligent skill-selection and category-boosted shortlists via `aether skills --brief TEXT` without requiring any external APIs or Node runtime for the Windows launcher. The Node CLI additionally supports `--ide` (for example, `cursor,claude`) to configure alternative IDE adapters and experimental local learning commands. For example: `node dist/cli.js init --cwd C:\path\to\project --ide cursor,claude`.
 
 ### Legacy Node CLI commands (`aether-design` / `node dist/cli.js`)
 
